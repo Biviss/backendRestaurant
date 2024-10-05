@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
-from app import models, schemas
+from app.schemas import schemas
+from app.models import models
 
 
 def create_menu_item(db: Session, menu_item: schemas.MenuItemCreate, restaurant_id: int) -> schemas.MenuItem:

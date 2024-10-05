@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from app import schemas, database
+from app import database
+from app.schemas import schemas
 from app.crud import restaurants
 
 router = APIRouter()

@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
-from app import models, schemas
+from app.schemas import schemas
+from app.models import models
 
 
 def get_restaurants(db: Session, skip: int = 0, limit: int = 10) -> list[schemas.Restaurant]:

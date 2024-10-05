@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from app import models
+from app.models import models
 from app.database import engine
 from fastapi.middleware.cors import CORSMiddleware
 from app.routers import restaurants, menus
