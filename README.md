@@ -16,7 +16,7 @@ This project is a backend part of a website about restaurants and their menus bu
 
 2. Create MySQL DB and create an .env file with database settings in the root folder of the project:
 
-   SQLALCHEMY_DATABASE_URL=mysql+pymysql://<USERNAME>:<PASSWORD>@localhost/<DBNAME>
+   SQLALCHEMY_DATABASE_URL=mysql+pymysql://USERNAME:PASSWORD@localhost/DBNAME
 
 3. Build and run docker-compose.yml:
 
