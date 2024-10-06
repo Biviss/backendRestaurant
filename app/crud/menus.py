@@ -1,10 +1,10 @@
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
-from app.schemas import schemas
+from app.schemas import menus
 from app.models import models
 
 
-def create_menu_item(db: Session, menu_item: schemas.MenuItemCreate, restaurant_id: int) -> schemas.MenuItem:
+def create_menu_item(db: Session, menu_item: menus.MenuItemCreate, restaurant_id: int) -> menus.MenuItem:
     db_menu_item = models.MenuItem(**menu_item.dict(), restaurant_id=restaurant_id)
     db.add(db_menu_item)
 
@@ -15,15 +15,15 @@ def create_menu_item(db: Session, menu_item: schemas.MenuItemCreate, restaurant_
         db.rollback()
         raise ValueError("This menu already exists.")
 
-    return schemas.MenuItem.from_orm(db_menu_item)
+    return menus.MenuItem.from_orm(db_menu_item)
 
 
-def get_menu_items(db: Session, restaurant_id: int) -> list[schemas.MenuItem]:
+def get_menu_items(db: Session, restaurant_id: int) -> list[menus.MenuItem]:
     menu_items = db.query(models.MenuItem).filter(models.MenuItem.restaurant_id == restaurant_id).all()
-    return [schemas.MenuItem.from_orm(item) for item in menu_items]
+    return [menus.MenuItem.from_orm(item) for item in menu_items]
 
 
-def update_menu_item(db: Session, menu_item_id: int, menu_item: schemas.MenuItemCreate) -> schemas.MenuItem | None:
+def update_menu_item(db: Session, menu_item_id: int, menu_item: menus.MenuItemCreate) -> menus.MenuItem | None:
     db_menu_item = db.query(models.MenuItem).filter(models.MenuItem.id == menu_item_id).first()
 
     if db_menu_item is None:
@@ -34,10 +34,10 @@ def update_menu_item(db: Session, menu_item_id: int, menu_item: schemas.MenuItem
 
     db.commit()
     db.refresh(db_menu_item)
-    return schemas.MenuItem.from_orm(db_menu_item)
+    return menus.MenuItem.from_orm(db_menu_item)
 
 
-def delete_menu_item(db: Session, menu_item_id: int) -> schemas.MenuItem | None:
+def delete_menu_item(db: Session, menu_item_id: int) -> menus.MenuItem | None:
     db_menu_item = db.query(models.MenuItem).filter(models.MenuItem.id == menu_item_id).first()
 
     if db_menu_item is None:
@@ -45,4 +45,4 @@ def delete_menu_item(db: Session, menu_item_id: int) -> schemas.MenuItem | None:
 
     db.delete(db_menu_item)
     db.commit()
-    return schemas.MenuItem.from_orm(db_menu_item)
+    return menus.MenuItem.from_orm(db_menu_item)
