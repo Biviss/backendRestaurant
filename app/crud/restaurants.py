@@ -47,18 +47,32 @@ def create_restaurant(db: Session, restaurant: restaurants.RestaurantCreate) -> 
     return restaurants.Restaurant.from_orm(db_restaurant)
 
 
-def update_restaurant(db: Session, restaurant_id: int, restaurant: restaurants.RestaurantCreate) -> models.Restaurant | None:
+def get_restaurant(db: Session, restaurant_id: int):
     """
-        Updates the restaurant.
+        Get a restaurant.
 
         Args:
             db (Session): The database session.
             restaurant_id (int): The ID of the restaurant.
-            restaurant (restaurants.RestaurantCreate): The updated restaurant data.
 
         Returns:
-            models.Restaurant | None: The updated restaurant object, or None if the restaurant was not found.
+            models.Restaurant | None: The restaurant with the specified ID, or None if not found.
         """
+    return db.query(models.Restaurant).filter(models.Restaurant.id == restaurant_id).first()
+
+
+def update_restaurant(db: Session, restaurant_id: int, restaurant: restaurants.RestaurantCreate) -> models.Restaurant | None:
+    """
+            Updates the restaurant.
+
+            Args:
+                db (Session): The database session.
+                restaurant_id (int): The ID of the restaurant.
+                restaurant (restaurants.RestaurantCreate): The updated restaurant data.
+
+            Returns:
+                models.Restaurant | None: The updated restaurant object, or None if the restaurant was not found.
+            """
     db_restaurant = db.query(models.Restaurant).filter(models.Restaurant.id == restaurant_id).first()
 
     if db_restaurant is None:
@@ -74,15 +88,15 @@ def update_restaurant(db: Session, restaurant_id: int, restaurant: restaurants.R
 
 def delete_restaurant(db: Session, restaurant_id: int) -> models.Restaurant | None:
     """
-        Deletes a restaurant.
+            Deletes a restaurant.
 
-        Args:
-            db (Session): The database session.
-            restaurant_id (int): The ID of the restaurant.
+            Args:
+                db (Session): The database session.
+                restaurant_id (int): The ID of the restaurant.
 
-        Returns:
-            models.Restaurant | None: The deleted restaurant object, or None if the restaurant was not found.
-        """
+            Returns:
+                models.Restaurant | None: The deleted restaurant object, or None if the restaurant was not found.
+            """
     db_restaurant = db.query(models.Restaurant).filter(models.Restaurant.id == restaurant_id).first()
 
     if db_restaurant is None:
