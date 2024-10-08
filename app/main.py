@@ -6,7 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.routers import restaurants, menus
 
 
-app = FastAPI()
+app = FastAPI(title="Restaurant")
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -21,7 +21,7 @@ app.add_middleware(
 
 @app.get("/")
 def home():
-    return {"data": "Restourant API"}
+    return {"data": "Restaurant API"}
 
 
 app.include_router(restaurants.router, prefix="/restaurants", tags=["Restaurants"])
