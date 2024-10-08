@@ -1,3 +1,4 @@
+import uvicorn
 from fastapi import FastAPI
 from app.models import models
 from app.database import engine
@@ -25,3 +26,6 @@ def home():
 
 app.include_router(restaurants.router, prefix="/restaurants", tags=["Restaurants"])
 app.include_router(menus.router, prefix="/restaurants", tags=["Menu"])
+
+if __name__ == "__main__":
+    uvicorn.run(app)
